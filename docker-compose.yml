@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  db:
+    container_name: bulletin-db
+    image: postgres
+    hostname: db
+    environment: 
+      GET_HOST_FROM: dns
+      POSTGRES_DB: dev
+      POSTGRES_USER: postgres-dev
+      POSTGRES_PASSWORD: mysecretpassword
+    ports: 
+      - 5432:5432
+    networks: 
+      - bulletin_net
+
+  bulletin-api:
+    container_name: bulletin-api
+    image: petersonsalme/bulletin-api:v1
+    hostname: bulletin-api
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment: 
+      GET_HOST_FROM: dns
+    networks: 
+      - bulletin_net
+    volumes: 
+      - .:/go/src/bulletin-api
+    depends_on: 
+      - db
+    links:
+      - db
+    labels: 
+      kompose.service.type: LoadBalancer
+
+networks: 
+  bulletin_net:
+    driver: bridge
+      

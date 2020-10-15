@@ -1,0 +1,9 @@
+GET http://34.122.165.112:8080/board
+
+POST http://34.122.165.112:8080/board HTTP/1.1
+content-type: application/json
+
+{
+    "author": "Peterson",
+    "content": "Content"
+}

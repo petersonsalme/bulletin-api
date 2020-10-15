@@ -2,9 +2,12 @@ package main
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
+	"strings"
 
 	"github.com/petersonsalme/bulletin-api/pkg/bulletin"
 
@@ -28,7 +31,9 @@ const (
 func main() {
 	db := Connect()
 
-	RunMigrations(db)
+	if err := RunMigrations(db); err != nil {
+		panic(err)
+	}
 
 	repo := bulletin.NewPostgresRepository(db)
 	service := bulletin.NewBulletinService(repo)
@@ -55,13 +60,18 @@ func Connect() *sql.DB {
 
 // RunMigrations runs all migration files
 func RunMigrations(db *sql.DB) error {
-	filesInfo, err := ioutil.ReadDir("./../migrations")
+	migrationsPath := os.Getenv("MIGRATIONS_PATH")
+	if strings.TrimSpace(migrationsPath) == "" {
+		return errors.New("MIGRATIONS_PATH not configured")
+	}
+
+	filesInfo, err := ioutil.ReadDir(migrationsPath)
 	if err != nil {
 		return fmt.Errorf("Failed to read migrations dir.\nError: %v", err.Error())
 	}
 
 	for _, file := range filesInfo {
-		migration, err := ioutil.ReadFile(file.Name())
+		migration, err := ioutil.ReadFile(fmt.Sprintf("%s/%s", migrationsPath, file.Name()))
 		if err != nil {
 			return fmt.Errorf("Failed to read file \"%s\".\nError: %v", file.Name(), err.Error())
 		}

@@ -1,9 +1,11 @@
+build: dependencies build-api build-docker-services
+
 # Deploy
 dependencies:
 	go mod download
 
 build-api:
-	go build -o ./bin/bulletin-api api/main.go
+	GOOS=linux GOARCH=386 go build -o ./bin/bulletin-api api/main.go
 	# go build -tags $(_ENV) -o ./bin/api api/main.go
 
 build-docker-services:
@@ -11,8 +13,6 @@ build-docker-services:
 
 kompose:
 	kompose -f docker-compose.yml convert -o k8s/
-
-build: dependencies build-api build-docker-services kompose
 
 # Dev
 clean:

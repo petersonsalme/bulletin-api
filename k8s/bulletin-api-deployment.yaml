@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert -o k8s/
+    kompose.service.type: LoadBalancer
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: bulletin-api
+  name: bulletin-api
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f docker-compose.yml convert -o k8s/
+        kompose.service.type: LoadBalancer
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: bulletin-api
+    spec:
+      containers:
+      - env:
+        - name: GET_HOST_FROM
+          value: dns
+        image: petersonsalme/bulletin-api:v1
+        name: bulletin-api
+        ports:
+        - containerPort: 8080
+        resources: {}
+      hostname: bulletin-api
+      restartPolicy: Always
+status: {}

@@ -26,7 +26,10 @@ spec:
       - env:
         - name: GET_HOST_FROM
           value: dns
+        - name: MIGRATIONS_PATH
+          value: /migrations
         image: petersonsalme/bulletin-api:v1
+        imagePullPolicy: Always
         name: bulletin-api
         ports:
         - containerPort: 8080

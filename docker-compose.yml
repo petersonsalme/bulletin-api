@@ -23,6 +23,7 @@ services:
       dockerfile: docker/Dockerfile
     environment: 
       GET_HOST_FROM: dns
+      MIGRATIONS_PATH: /migrations
     networks: 
       - bulletin_net
     depends_on: 

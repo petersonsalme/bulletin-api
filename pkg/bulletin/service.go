@@ -14,10 +14,10 @@ func NewBulletinService(r *PostgresRepository) *BulletinService {
 
 // GetAll queries all bulletins
 func (s *BulletinService) GetAll() ([]entity.Bulletin, error) {
-	return s.GetAll()
+	return s.repo.GetAll()
 }
 
 // Add adds a new Bulletin to database
 func (s *BulletinService) Add(b entity.Bulletin) error {
-	return s.Add(b)
+	return s.repo.Add(b)
 }

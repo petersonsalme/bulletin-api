@@ -14,28 +14,25 @@ services:
       - 5432:5432
     networks: 
       - bulletin_net
-
   bulletin-api:
     container_name: bulletin-api
     image: petersonsalme/bulletin-api:v1
     hostname: bulletin-api
     build: 
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile
     environment: 
       GET_HOST_FROM: dns
     networks: 
       - bulletin_net
-    volumes: 
-      - .:/go/src/bulletin-api
     depends_on: 
       - db
     links:
       - db
+    ports: 
+      - 8080:8080
     labels: 
       kompose.service.type: LoadBalancer
-
 networks: 
   bulletin_net:
     driver: bridge
-      

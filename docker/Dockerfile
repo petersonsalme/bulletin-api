@@ -1,13 +1,25 @@
-FROM golang:latest
+FROM golang:alpine3.12
 
-RUN mkdir -p /bulletin-api/bin
+ENV BULLETIN_API=/bulletin-api
+ENV MIGRATIONS_PATH=/migrations
 
-COPY ./bin/bulletin-api /bulletin-api/bin
+ENV GOOS=linux 
+ENV GOARCH=386 
 
-RUN mkdir -p /bulletin-api/migrations
+RUN mkdir -p ${MIGRATIONS_PATH}
+COPY ./migrations ${MIGRATIONS_PATH}
 
-COPY ./migrations /bulletin-api/migrations
+RUN mkdir -p ${BULLETIN_API}
+ADD go.mod ${BULLETIN_API}
+ADD go.sum ${BULLETIN_API}
+COPY ./api ${BULLETIN_API}/api
+COPY ./pkg ${BULLETIN_API}/pkg
 
-CMD bulletin-api
+WORKDIR ${BULLETIN_API}
+
+RUN go mod download
+RUN go build -o ./bin/bulletin-api api/main.go
+
+CMD ./bin/bulletin-api
 
 EXPOSE 8080

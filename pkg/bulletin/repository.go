@@ -7,12 +7,12 @@ import (
 	"github.com/petersonsalme/bulletin-api/pkg/entity"
 )
 
-//PostgresRepository postgres repo
+// PostgresRepository postgres repo
 type PostgresRepository struct {
 	db *sql.DB
 }
 
-//NewPostgresRepository create new repository
+// NewPostgresRepository create new repository
 func NewPostgresRepository(db *sql.DB) *PostgresRepository {
 	return &PostgresRepository{
 		db: db,

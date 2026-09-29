@@ -1,5 +1,7 @@
 # Bulletin API
 
+[![Go CI](https://github.com/petersonsalme/bulletin-api/actions/workflows/go-ci.yml/badge.svg)](https://github.com/petersonsalme/bulletin-api/actions/workflows/go-ci.yml)
+
 A Scalable API created for simply store and list Bulletins.
 
 ## Database Schema

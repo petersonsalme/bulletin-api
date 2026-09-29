@@ -61,3 +61,11 @@ Then
 ```makefile
 make run
 ```
+## Roadmap
+
+- [ ] Read database settings from environment variables instead of constants in `api/main.go`, and keep the Kubernetes credentials in a `Secret`.
+- [ ] Add unit tests for the service layer and integration tests for the repository with Testcontainers (Postgres).
+- [ ] Add pagination to `GET` requests that list bulletins.
+- [ ] Add readiness and liveness probes to the Kubernetes deployment.
+- [ ] Replace the deprecated `io/ioutil` package.
+- [ ] Structured logging and graceful shutdown.

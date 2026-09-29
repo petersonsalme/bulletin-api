@@ -1,4 +1,4 @@
-FROM golang:alpine3.12
+FROM golang:1.26-alpine
 
 ENV BULLETIN_API=/bulletin-api
 ENV MIGRATIONS_PATH=/migrations

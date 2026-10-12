@@ -25,6 +25,8 @@ bulletin-api/
 
 ## Regras e Comandos
 
+- Prefix shell commands with `rtk` (see `.agents/rules/rtk.md`).
+
 1. **Build e Testes:**
    - Baixar dependências: `go mod download`
    - Compilar binário: `go build -o ./bin/bulletin-api api/main.go` (ou `make build-api`)
@@ -36,3 +38,5 @@ bulletin-api/
    - Manter consistência com as migrações SQL em `migrations/` ao alterar modelos.
    - Commits seguindo Conventional Commits (`feat:`, `fix:`, `refactor:`, `test:`).
    - Comunicação com o usuário em Português do Brasil; código e commits em Inglês.
+
+@.agents/rules/rtk.md
